@@ -38,7 +38,7 @@ class LightrailShopperTokenFactory
         }
 
         $validityInSeconds = 43200;
-        $metadata = null;
+        $metadata          = null;
         if (is_numeric($options)) {
             // Support for legacy code when the second param was validityInSeconds.
             $validityInSeconds = $options;
@@ -58,22 +58,23 @@ class LightrailShopperTokenFactory
         $payload = explode('.', Lightrail::$apiKey);
         $payload = json_decode(base64_decode($payload[1]), true);
 
-        $iat = time();
+        $iat   = time();
         $token = array(
-            'g' => array(
-                    'gui' => $payload['g']['gui'],
-                    'gmi' => $payload['g']['gmi']
-                ) + $g,
-            'iat' => $iat,
-            'exp' =>  $iat + $validityInSeconds,
-            'iss' => "MERCHANT",
-            'roles' => ['shopper']
+            'g'     => array(
+                           'gui' => $payload['g']['gui'],
+                           'gmi' => $payload['g']['gmi'],
+                       ) + $g,
+            'iat'   => $iat,
+            'exp'   => $iat + $validityInSeconds,
+            'iss'   => "MERCHANT",
+            'roles' => ['shopper'],
         );
-        if (!is_null($metadata)) {
+        if ( ! is_null($metadata)) {
             $token['metadata'] = $metadata;
         }
 
         $jwt = \Firebase\JWT\JWT::encode($token, Lightrail::$sharedSecret, 'HS256');
+
         return $jwt;
     }
 }

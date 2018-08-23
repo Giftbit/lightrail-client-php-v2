@@ -14,10 +14,10 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testSignsShopperId()
     {
-        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
         Lightrail::$sharedSecret = "secret";
 
-        $shopperToken = LightrailShopperTokenFactory::generate(array("shopperId" => "zhopherId"), 600);
+        $shopperToken   = LightrailShopperTokenFactory::generate(array("shopperId" => "zhopherId"), 600);
         $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
 
         $this->assertEquals("zhopherId", $shopperPayload->g->shi, "g.shi");
@@ -31,10 +31,10 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testSignsContactUserSuppliedId()
     {
-        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
         Lightrail::$sharedSecret = "secret";
 
-        $shopperToken = LightrailShopperTokenFactory::generate(array("userSuppliedId" => "luserSuppliedId"), 600);
+        $shopperToken   = LightrailShopperTokenFactory::generate(array("userSuppliedId" => "luserSuppliedId"), 600);
         $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
 
         $this->assertEquals("luserSuppliedId", $shopperPayload->g->cui, "g.cui");
@@ -48,10 +48,10 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testSignsContactId()
     {
-        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
         Lightrail::$sharedSecret = "secret";
 
-        $shopperToken = LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"), 600);
+        $shopperToken   = LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"), 600);
         $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
 
         $this->assertEquals("chauntaktEyeDee", $shopperPayload->g->coi, "g.coi");
@@ -65,12 +65,13 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testSignsMetadata()
     {
-        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
         Lightrail::$sharedSecret = "secret";
 
         $shopperTokenOptions = array("metadata" => array("foo" => "bar"));
-        $shopperToken = LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"), $shopperTokenOptions);
-        $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
+        $shopperToken        = LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"),
+            $shopperTokenOptions);
+        $shopperPayload      = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
 
         $this->assertEquals("chauntaktEyeDee", $shopperPayload->g->coi, "g.coi");
         $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
