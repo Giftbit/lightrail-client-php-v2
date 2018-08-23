@@ -15,15 +15,16 @@ class LightrailShopperTokenFactory
      * @param $contact array an associative array that defines one of: contactId, userSuppliedId or shopperId
      * @param $options array an associative array that may define: `validityInSeconds` the number of seconds the shopper token will be valid for,
      *              `metadata` additional data that can be signed in the shopper token.
+     *
      * @return string the shopper token
      */
     public static function generate($contact, $options = array())
     {
-        if (!isset(Lightrail::$apiKey) || empty(Lightrail::$apiKey)) {
-            throw new Exceptions\BadParameterException("Lightrail.apiKey is empty or not set.");
+        if ( ! isset(Lightrail::$apiKey) || empty(Lightrail::$apiKey)) {
+            throw new \Exception("Lightrail.apiKey is empty or not set.");
         }
-        if (!isset(Lightrail::$sharedSecret) || empty(Lightrail::$sharedSecret)) {
-            throw new Exceptions\BadParameterException('Lightrail.sharedSecret is not set.');
+        if ( ! isset(Lightrail::$sharedSecret) || empty(Lightrail::$sharedSecret)) {
+            throw new \Exception('Lightrail.sharedSecret is not set.');
         }
 
         if (isset($contact['shopperId'])) {
@@ -33,7 +34,7 @@ class LightrailShopperTokenFactory
         } elseif (isset($contact['userSuppliedId'])) {
             $g = array('cui' => $contact['userSuppliedId']);
         } else {
-            throw new Exceptions\BadParameterException("contact must set one of: shopperId, contactId, userSuppliedId");
+            throw new \Exception("contact must set one of: shopperId, contactId, userSuppliedId");
         }
 
         $validityInSeconds = 43200;
@@ -51,7 +52,7 @@ class LightrailShopperTokenFactory
         }
 
         if ($validityInSeconds <= 0) {
-            throw new Exceptions\BadParameterException("validityInSeconds must be > 0");
+            throw new \Exception("validityInSeconds must be > 0");
         }
 
         $payload = explode('.', Lightrail::$apiKey);
