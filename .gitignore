@@ -1,0 +1,12 @@
+composer.phar
+/vendor/
+.env
+
+#Apple stuff
+.DS_Store
+
+# IntelliJ stuff
+.idea/
+*.iml
+/deploy.sh
+/out/
