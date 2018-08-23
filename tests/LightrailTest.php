@@ -16,13 +16,5 @@ class LightrailTest extends TestCase
         $this->assertNotEmpty(getEnv("LIGHTRAIL_API_KEY"));
         $this->assertNotEmpty(getEnv("LIGHTRAIL_SHARED_SECRET"));
         $this->assertNotEmpty(getEnv("CONTACT_ID"));
-        $this->assertNotEmpty(getEnv("SHOPPER_ID"));
-    }
-
-    public function testPing()
-    {
-        Lightrail::$apiKey = getEnv("LIGHTRAIL_API_KEY");
-        $response = LightrailAPICall::ping();
-        $this->assertEquals('TEST', $response['user']['mode']);
     }
 }
