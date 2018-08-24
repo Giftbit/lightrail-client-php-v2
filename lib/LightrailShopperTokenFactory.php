@@ -57,6 +57,7 @@ class LightrailShopperTokenFactory
             'g'     => array(
                            'gui' => $payload['g']['gui'],
                            'gmi' => $payload['g']['gmi'],
+                           'tmi' => $payload['g']['tmi'],
                        ) + $g,
             'iat'   => $iat,
             'exp'   => $iat + $validityInSeconds,

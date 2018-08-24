@@ -13,7 +13,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 {
     public function testSignsContactId()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
         Lightrail::$sharedSecret = "secret";
 
         $shopperToken   = LightrailShopperTokenFactory::generate("chauntaktEyeDee", array("validityInSeconds" => 600));
@@ -22,6 +22,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
         $this->assertEquals("chauntaktEyeDee", $shopperPayload->g->coi, "g.coi");
         $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
         $this->assertEquals("germie", $shopperPayload->g->gmi, "g.gmi");
+        $this->assertEquals("teemie", $shopperPayload->g->tmi, "g.tmi");
         $this->assertEquals("MERCHANT", $shopperPayload->iss, "iss");
         $this->assertObjectNotHasAttribute("metadata", $shopperPayload);
         $this->assertGreaterThan(0, $shopperPayload->iat, "iat is a number > 0");
@@ -30,7 +31,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testSignsMetadata()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
         Lightrail::$sharedSecret = "secret";
 
         $shopperTokenOptions = array("metadata" => array("foo" => "bar"));
@@ -41,6 +42,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
         $this->assertEquals("chauntaktEyeDee", $shopperPayload->g->coi, "g.coi");
         $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
         $this->assertEquals("germie", $shopperPayload->g->gmi, "g.gmi");
+        $this->assertEquals("teemie", $shopperPayload->g->tmi, "g.tmi");
         $this->assertEquals("MERCHANT", $shopperPayload->iss, "iss");
         $this->assertObjectHasAttribute("metadata", $shopperPayload);
         $this->assertObjectHasAttribute("foo", $shopperPayload->metadata);
@@ -61,7 +63,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testThrowsExceptionIfSharedSecretEmpty()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
         Lightrail::$sharedSecret = "";
 
         $this->expectException(\Exception::class);
