@@ -52,6 +52,11 @@ class LightrailShopperTokenFactory
         $payload = explode('.', Lightrail::$apiKey);
         $payload = json_decode(base64_decode($payload[1]), true);
 
+        if ( ! isset($payload['g']['gui']) || ! isset($payload['g']['gmi']) || ! isset($payload['g']['tmi'])) {
+            throw new \Exception("apiKey not valid");
+
+        }
+
         $iat   = time();
         $token = array(
             'g'     => array(
