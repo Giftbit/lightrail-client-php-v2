@@ -7,18 +7,19 @@ class LightrailShopperTokenFactory
     /**
      * Generate a shopper token that can be used to make Lightrail calls
      * restricted to that particular shopper.  The shopper can be defined by the
-     * contactId, userSuppliedId, or shopperId.
+     * contactId, or an empty string for anonymous.
      *
-     * eg: `generateShopperToken(array("shopperId" => "user-12345"));`
-     * eg: `generateShopperToken(array("shopperId" => "user-12345"), array("validityInSeconds" => 43200, "metadata" => array("foo" => "bar")));`
+     * eg: `generateShopperToken("user-12345");`
+     * eg: `generateShopperToken("user-12345", array("validityInSeconds" => 43200);`
      *
-     * @param $contact array an associative array that defines one of: contactId, userSuppliedId or shopperId
-     * @param $options array an associative array that may define: `validityInSeconds` the number of seconds the shopper token will be valid for,
-     *              `metadata` additional data that can be signed in the shopper token.
+     * @param $contactId string The ID of the contact
+     * @param $options array A GenerateShopperTokenOptions object
      *
-     * @return string the shopper token
+     * @return $shopperToken string The shopper token
+     *
+     * @throws \Exception if library is not properly configured (with API key & shared secret) or if missing parameter
      */
-    public static function generate($contact, $options = array())
+    public static function generate($contactId, $options = array())
     {
         if ( ! isset(Lightrail::$apiKey) || empty(Lightrail::$apiKey)) {
             throw new \Exception("Lightrail.apiKey is empty or not set.");
@@ -27,22 +28,15 @@ class LightrailShopperTokenFactory
             throw new \Exception('Lightrail.sharedSecret is not set.');
         }
 
-        if (isset($contact['shopperId'])) {
-            $g = array('shi' => $contact['shopperId']);
-        } elseif (isset($contact['contactId'])) {
-            $g = array('coi' => $contact['contactId']);
-        } elseif (isset($contact['userSuppliedId'])) {
-            $g = array('cui' => $contact['userSuppliedId']);
+        if (isset($contactId)) {
+            $g = array('coi' => $contactId);
         } else {
-            throw new \Exception("contact must set one of: shopperId, contactId, userSuppliedId");
+            throw new \Exception("Must provide a contact ID or an empty string for anonymous");
         }
 
         $validityInSeconds = 43200;
         $metadata          = null;
-        if (is_numeric($options)) {
-            // Support for legacy code when the second param was validityInSeconds.
-            $validityInSeconds = $options;
-        } elseif (is_array($options)) {
+        if (is_array($options)) {
             if (isset($options['validityInSeconds'])) {
                 $validityInSeconds = $options['validityInSeconds'];
             }
