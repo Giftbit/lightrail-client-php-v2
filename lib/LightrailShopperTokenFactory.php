@@ -21,10 +21,10 @@ class LightrailShopperTokenFactory
      */
     public static function generate($contactId, $options = array())
     {
-        if ( ! isset(Lightrail::$apiKey) || empty(Lightrail::$apiKey)) {
+        if (!isset(Lightrail::$apiKey) || empty(Lightrail::$apiKey)) {
             throw new \Exception("Lightrail.apiKey is empty or not set.");
         }
-        if ( ! isset(Lightrail::$sharedSecret) || empty(Lightrail::$sharedSecret)) {
+        if (!isset(Lightrail::$sharedSecret) || empty(Lightrail::$sharedSecret)) {
             throw new \Exception('Lightrail.sharedSecret is not set.');
         }
 
@@ -35,7 +35,7 @@ class LightrailShopperTokenFactory
         }
 
         $validityInSeconds = 43200;
-        $metadata          = null;
+        $metadata = null;
         if (is_array($options)) {
             if (isset($options['validityInSeconds'])) {
                 $validityInSeconds = $options['validityInSeconds'];
@@ -52,24 +52,24 @@ class LightrailShopperTokenFactory
         $payload = explode('.', Lightrail::$apiKey);
         $payload = json_decode(base64_decode($payload[1]), true);
 
-        if ( ! isset($payload['g']['gui']) || ! isset($payload['g']['gmi']) || ! isset($payload['g']['tmi'])) {
+        if (!isset($payload['g']['gui']) || !isset($payload['g']['gmi']) || !isset($payload['g']['tmi'])) {
             throw new \Exception("apiKey not valid");
 
         }
 
-        $iat   = time();
+        $iat = time();
         $token = array(
-            'g'     => array(
-                           'gui' => $payload['g']['gui'],
-                           'gmi' => $payload['g']['gmi'],
-                           'tmi' => $payload['g']['tmi'],
-                       ) + $g,
-            'iat'   => $iat,
-            'exp'   => $iat + $validityInSeconds,
-            'iss'   => "MERCHANT",
+            'g' => array(
+                    'gui' => $payload['g']['gui'],
+                    'gmi' => $payload['g']['gmi'],
+                    'tmi' => $payload['g']['tmi'],
+                ) + $g,
+            'iat' => $iat,
+            'exp' => $iat + $validityInSeconds,
+            'iss' => "MERCHANT",
             'roles' => ['shopper'],
         );
-        if ( ! is_null($metadata)) {
+        if (!is_null($metadata)) {
             $token['metadata'] = $metadata;
         }
 

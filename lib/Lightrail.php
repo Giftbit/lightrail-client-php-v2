@@ -21,7 +21,7 @@ class Lightrail
 
     public static function checkApiKey()
     {
-        if ( ! isset(self::$apiKey)) {
+        if (!isset(self::$apiKey)) {
             throw new Exception('Lightrail::$apiKey not set.');
         }
         if (empty(self::$apiKey)) {

@@ -13,10 +13,10 @@ class LightrailShopperTokenFactoryTest extends TestCase
 {
     public function testSignsContactId()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
         Lightrail::$sharedSecret = "secret";
 
-        $shopperToken   = LightrailShopperTokenFactory::generate("chauntaktEyeDee", array("validityInSeconds" => 600));
+        $shopperToken = LightrailShopperTokenFactory::generate("chauntaktEyeDee", array("validityInSeconds" => 600));
         $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
 
         $this->assertEquals("chauntaktEyeDee", $shopperPayload->g->coi, "g.coi");
@@ -31,10 +31,10 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testSignsEmptyContactId()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
         Lightrail::$sharedSecret = "secret";
 
-        $shopperToken   = LightrailShopperTokenFactory::generate("", array("validityInSeconds" => 600));
+        $shopperToken = LightrailShopperTokenFactory::generate("", array("validityInSeconds" => 600));
         $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
 
         $this->assertEquals("", $shopperPayload->g->coi, "g.coi");
@@ -49,13 +49,13 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testSignsMetadata()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
         Lightrail::$sharedSecret = "secret";
 
         $shopperTokenOptions = array("metadata" => array("foo" => "bar"));
-        $shopperToken        = LightrailShopperTokenFactory::generate("chauntaktEyeDee",
+        $shopperToken = LightrailShopperTokenFactory::generate("chauntaktEyeDee",
             $shopperTokenOptions);
-        $shopperPayload      = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
+        $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
 
         $this->assertEquals("chauntaktEyeDee", $shopperPayload->g->coi, "g.coi");
         $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
@@ -71,7 +71,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testThrowsExceptionIfApiKeyEmpty()
     {
-        Lightrail::$apiKey       = "";
+        Lightrail::$apiKey = "";
         Lightrail::$sharedSecret = "secret";
 
         $this->expectException(\Exception::class);
@@ -81,7 +81,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testThrowsExceptionIfApiKeyMissingGui()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7ImdtaSI6Imdlcm1pZSIsInRtaSI6InRlZW1pZSJ9fQ.p0d-IOkELlQUWchphCEqYembTGOVvzdpnlqGpa34kKw";
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7ImdtaSI6Imdlcm1pZSIsInRtaSI6InRlZW1pZSJ9fQ.p0d-IOkELlQUWchphCEqYembTGOVvzdpnlqGpa34kKw";
         Lightrail::$sharedSecret = "secret";
 
         $this->expectException(\Exception::class);
@@ -91,7 +91,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testThrowsExceptionIfApiKeyMissingGmi()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwidG1pIjoidGVlbWllIn19.JNNh_KyFwTfE6-p9AhcDhvD0wyJB2gZofvVewnG6p3s";
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwidG1pIjoidGVlbWllIn19.JNNh_KyFwTfE6-p9AhcDhvD0wyJB2gZofvVewnG6p3s";
         Lightrail::$sharedSecret = "secret";
 
         $this->expectException(\Exception::class);
@@ -101,7 +101,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testThrowsExceptionIfApiKeyMissingTmi()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
         Lightrail::$sharedSecret = "secret";
 
         $this->expectException(\Exception::class);
@@ -111,7 +111,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
 
     public function testThrowsExceptionIfSharedSecretEmpty()
     {
-        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc";
         Lightrail::$sharedSecret = "";
 
         $this->expectException(\Exception::class);
