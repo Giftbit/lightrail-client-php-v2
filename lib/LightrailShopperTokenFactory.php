@@ -28,10 +28,10 @@ class LightrailShopperTokenFactory
             throw new \Exception('Lightrail.sharedSecret is not set.');
         }
 
-        if (isset($contactId)) {
+        if (is_string($contactId) && isset($contactId)) {
             $g = array('coi' => $contactId);
         } else {
-            throw new \Exception("Must provide a contact ID or an empty string for anonymous");
+            throw new \Exception("Must provide a string contact ID or an empty string for anonymous");
         }
 
         $validityInSeconds = 43200;
