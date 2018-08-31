@@ -8,7 +8,7 @@ Lightrail is a modern platform for digital account credits, gift cards, promotio
 
 #### Composer
 
-You can add this library as a dependency to your project using `composer`:
+You can add this library as a dependency to your project using [composer](https://getcomposer.org/):
 ```
 composer require lightrail/lightrail-v2
 ```
@@ -25,19 +25,19 @@ Before using this client, you'll need to configure it to use your API key. You c
 
 If you are using our Drop-in Gift Card solution, you can use this library to generate shopper tokens for purchasing or redeeming a gift card.
 
-Gift cards can be purchased anonymously in which case the shopper token can be generated with a contactId of `""`.
+Gift cards can be purchased anonymously in which case the shopper token can be generated with a contactId of `''`.
 
 ```php
 \Lightrail\LightrailShopperTokenFactory::generate('');
 ```
 
-When redeeming a gift card the Value that backs the gift card is attached to a Contact.  The shopper token must be generated with the Contact's ID.
+When redeeming a gift card the Value that backs the gift card is attached to a Contact, thus the shopper token must be generated with the Contact's ID.
 
 ```php
 \Lightrail\LightrailShopperTokenFactory::generate('myContactsId');
 ```
 
-You can also pass in an optional second argument specifying the token's validity in seconds: 
+Shopper tokens expire after 12 hours by default.  You can also pass in an optional second argument specifying the token's validity in seconds:
 
 ```php
 \Lightrail\LightrailShopperTokenFactory::generate('myContactsId', 600);
